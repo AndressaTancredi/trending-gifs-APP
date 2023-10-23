@@ -8,8 +8,7 @@ class TrendingGiphyCubit extends Cubit<TrendingGiphyState> {
   Future<void> getGifs() async {
     try {
       emit(LoadingTrendingGiphyState());
-      await Future.delayed(const Duration(seconds: 2));
-
+      await delay();
       final giphyList = await GiphyAPI.getTrendingGifs();
       emit(InitialTrendingGiphyState(giphyList: giphyList));
     } catch (e) {
@@ -20,12 +19,15 @@ class TrendingGiphyCubit extends Cubit<TrendingGiphyState> {
   Future<void> searchGifs(String word) async {
     try {
       emit(LoadingTrendingGiphyState());
-      await Future.delayed(const Duration(seconds: 2));
-
+      await delay();
       final giphyList = await GiphyAPI.searchTrendingGifs(word);
       emit(LoadedTrendingGiphyState(searchedGiphyList: giphyList));
     } catch (e) {
       emit(ErrorTrendingGiphyState());
     }
+  }
+
+  delay() async {
+    return await Future.delayed(const Duration(seconds: 3));
   }
 }

@@ -69,7 +69,6 @@ class _HomePageState extends State<HomePage> {
                     }
                     if (state is LoadingTrendingGiphyState) {
                       return CachedNetworkImage(
-                        fadeInDuration: const Duration(milliseconds: 500),
                         width: double.infinity,
                         fit: BoxFit.contain,
                         imageUrl:
@@ -83,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                     } else if (state is ErrorTrendingGiphyState) {
                       return const Center(
                         child: Text(
-                            'Sorry, something went wrong. Please try again later.'),
+                            'Sorry, something went wrong. Please try again.'),
                       );
                     } else {
                       return const SizedBox(
