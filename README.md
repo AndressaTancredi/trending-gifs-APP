@@ -24,12 +24,14 @@ To run this app on your device, follow the steps below:
 1. Clone this repository to your development environment:
 
 
-    git clone https://github.com/your-username/repository-name.git 
+    git clone [Trending Gifs APP REPO](https://github.com/AndressaTancredi/trending-gifs-APP). 
 
 2. Navigate to the project directory:
    
 
     cd repository-name
+
+3. Make sure to create a .env file and include your GIPHY API KEY.
 
 4.  Run the app with Flutter:
 
