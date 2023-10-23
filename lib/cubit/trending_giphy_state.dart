@@ -7,8 +7,11 @@ class InitialTrendingGiphyState extends TrendingGiphyState {
   InitialTrendingGiphyState({required this.giphyList});
 }
 
-class SearchTrendingGiphyState extends TrendingGiphyState {}
+class LoadingTrendingGiphyState extends TrendingGiphyState {}
 
-class LoadedTrendingGiphyState extends TrendingGiphyState {}
+class LoadedTrendingGiphyState extends TrendingGiphyState {
+  final List<Giphy> searchedGiphyList;
+  LoadedTrendingGiphyState({required this.searchedGiphyList});
+}
 
 class ErrorTrendingGiphyState extends TrendingGiphyState {}

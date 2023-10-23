@@ -15,13 +15,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController _wordController = TextEditingController();
   late final TrendingGiphyCubit cubit;
 
   @override
   void initState() {
     super.initState();
     cubit = BlocProvider.of<TrendingGiphyCubit>(context);
-    cubit.getGiphys();
+    cubit.getGifs();
   }
 
   @override
@@ -33,8 +34,13 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
           child: Column(
             children: [
-              TextField(
-                onTap: () {},
+              TextFormField(
+                controller: _wordController,
+                cursorColor: const Color(0XFFb3bac2),
+                onFieldSubmitted: (value) {
+                  cubit.searchGifs(_wordController.text);
+                  _wordController.clear();
+                },
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(12),
                   prefixIcon: Image.asset(
@@ -60,8 +66,23 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, state) {
                     if (state is InitialTrendingGiphyState) {
                       return _buildGiphyList(giphyList: state.giphyList);
+                    }
+                    if (state is LoadingTrendingGiphyState) {
+                      return CachedNetworkImage(
+                        fadeInDuration: const Duration(milliseconds: 500),
+                        width: double.infinity,
+                        fit: BoxFit.contain,
+                        imageUrl:
+                            'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnp4em44emVwcTRhYjgwdmt6Zzh5MGJlYTRndmRoNTkzY2plNHR2cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lZfieM3rRK5ZTMOnNd/giphy.gif',
+                        height: 300,
+                      );
+                    }
+                    if (state is LoadedTrendingGiphyState) {
+                      return _buildGiphyList(
+                          giphyList: state.searchedGiphyList);
                     } else if (state is ErrorTrendingGiphyState) {
-                      return const Text('An error occurred');
+                      return const Text(
+                          'Sorry, something went wrong. Please try again later.');
                     } else {
                       return const SizedBox(
                         height: 150.0,
