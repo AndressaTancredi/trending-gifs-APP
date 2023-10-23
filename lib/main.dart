@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:trendinggifs/pages/home_page.dart';
+import 'package:trending_gifs/pages/home_page.dart';
 
-import 'cubit/trending_giphy_cubit.dart';
+import 'cubit/trending_gifs_cubit.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => TrendingGiphyCubit(),
+      create: (_) => TrendingGifsCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(),

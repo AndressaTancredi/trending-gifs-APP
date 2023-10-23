@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../cubit/trending_giphy_cubit.dart';
-import '../cubit/trending_giphy_state.dart';
-import '../models/giphy.dart';
+import '../cubit/trending_gifs_cubit.dart';
+import '../cubit/trending_gifs_state.dart';
+import '../models/gif.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,13 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _wordController = TextEditingController();
-  late final TrendingGiphyCubit cubit;
+  final TextEditingController _inputController = TextEditingController();
+  late final TrendingGifsCubit cubit;
 
   @override
   void initState() {
     super.initState();
-    cubit = BlocProvider.of<TrendingGiphyCubit>(context);
+    cubit = BlocProvider.of<TrendingGifsCubit>(context);
     cubit.getGifs();
   }
 
@@ -35,11 +35,11 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               TextFormField(
-                controller: _wordController,
+                controller: _inputController,
                 cursorColor: const Color(0XFFb3bac2),
                 onFieldSubmitted: (value) {
-                  cubit.searchGifs(_wordController.text);
-                  _wordController.clear();
+                  cubit.searchGifs(_inputController.text);
+                  _inputController.clear();
                 },
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(12),
@@ -64,10 +64,10 @@ class _HomePageState extends State<HomePage> {
                 child: BlocBuilder(
                   bloc: cubit,
                   builder: (context, state) {
-                    if (state is InitialTrendingGiphyState) {
-                      return _buildGiphyList(giphyList: state.giphyList);
+                    if (state is InitialTrendingGifsState) {
+                      return _buildGifsList(gifsList: state.gifsList);
                     }
-                    if (state is LoadingTrendingGiphyState) {
+                    if (state is LoadingTrendingGifsState) {
                       return CachedNetworkImage(
                         width: double.infinity,
                         fit: BoxFit.contain,
@@ -76,10 +76,9 @@ class _HomePageState extends State<HomePage> {
                         height: 300,
                       );
                     }
-                    if (state is LoadedTrendingGiphyState) {
-                      return _buildGiphyList(
-                          giphyList: state.searchedGiphyList);
-                    } else if (state is ErrorTrendingGiphyState) {
+                    if (state is LoadedTrendingGifsState) {
+                      return _buildGifsList(gifsList: state.searchedGifsList);
+                    } else if (state is ErrorTrendingGifsState) {
                       return const Center(
                         child: Text(
                             'Sorry, something went wrong. Please try again.'),
@@ -105,7 +104,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildGiphyList({required List<Giphy> giphyList}) {
+  Widget _buildGifsList({required List<Gif> gifsList}) {
     return Padding(
       padding: const EdgeInsets.only(top: 32),
       child: MasonryGridView.builder(
@@ -113,15 +112,15 @@ class _HomePageState extends State<HomePage> {
         mainAxisSpacing: 6,
         gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2),
-        itemCount: giphyList.length,
+        itemCount: gifsList.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(2.0),
             child: CachedNetworkImage(
               width: double.infinity,
               fit: BoxFit.cover,
-              imageUrl: giphyList[index].giphyUrl,
-              height: giphyList[index].giphyHeight,
+              imageUrl: gifsList[index].gifUrl,
+              height: gifsList[index].gifHeight,
               placeholder: (context, url) => const SizedBox(
                 height: 50.0,
                 width: 50.0,
