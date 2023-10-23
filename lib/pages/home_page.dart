@@ -33,36 +33,25 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
           child: Column(
             children: [
-              GestureDetector(
+              TextField(
                 onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(12),
+                  prefixIcon: Image.asset(
+                    'assets/icons/search.png',
+                    scale: 30,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: const Color(0XFFEAEEF3),
+                  hintText: 'Search by name',
+                  helperStyle: const TextStyle(
+                    color: Color(0XFFb3bac2),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: const Row(
-                    children: [
-                      Icon(
-                        Icons.search_rounded,
-                        size: 25,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 14.0),
-                        child: Text(
-                          'Search by name',
-                          style: TextStyle(
-                            color: Color(0XFFB4B4BE),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  fillColor: const Color(0XFFEAEEF3),
+                  filled: true,
                 ),
               ),
               Expanded(
