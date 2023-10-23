@@ -81,8 +81,10 @@ class _HomePageState extends State<HomePage> {
                       return _buildGiphyList(
                           giphyList: state.searchedGiphyList);
                     } else if (state is ErrorTrendingGiphyState) {
-                      return const Text(
-                          'Sorry, something went wrong. Please try again later.');
+                      return const Center(
+                        child: Text(
+                            'Sorry, something went wrong. Please try again later.'),
+                      );
                     } else {
                       return const SizedBox(
                         height: 150.0,

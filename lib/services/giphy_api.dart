@@ -36,7 +36,7 @@ class GiphyAPI {
     };
 
     final response = await http.get(
-      Uri.https('api.giphy.com', '/v1/gifs/search', queryParameters),
+      Uri.https('api.giphy.com', '/v1/gifs/searc', queryParameters),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
